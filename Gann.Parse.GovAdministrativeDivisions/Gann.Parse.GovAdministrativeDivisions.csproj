@@ -10,6 +10,7 @@
     <ItemGroup>
       <PackageReference Include="FreeSql" Version="3.2.833" />
       <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.833" />
+        <PackageReference Include="icu.net" Version="2.10.0"/>
     </ItemGroup>
 
 </Project>

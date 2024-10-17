@@ -2,14 +2,16 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 using FreeSql;
+using Icu;
 using DataType = FreeSql.DataType;
 
 // See https://www.mca.gov.cn/n156/n186/index.html
 
 Console.WriteLine("Hello, World!");
+Wrapper.Init();
 
 var areaCode = new Regex(""">(\d+)<\/td>$""", RegexOptions.Multiline);
-var areaName = new Regex(""">(.+)<\/td>$""");
+var areaName = new Regex(""">(\p{Han}})<\/td>$""");
 
 Area 省 = null;
 Area 市 = null;
@@ -40,7 +42,6 @@ var incrId = 1;
                         AreaName = areaNameEx.Value[
                                 Math.Max(areaNameEx.Value.IndexOf("span>", StringComparison.Ordinal), 0)..]
                             .Replace("span>", "")
-                         //   .Replace("<span style=\"mso-spacerun:yes\">&nbsp;</span>","")
                     };
 
                     if (!nameNode.Contains("&nbsp;"))
@@ -82,12 +83,12 @@ fsql.Insert<Area>().AsTable(old => "t_gov_administrative_divisions")
     .AppendData(areas)
     .ExecuteAffrows();
 
+
+Wrapper.Cleanup();
+
 public class Area
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column("id")]
-    public int Id { get; set; }
+    [Key] [Column("id")] public int Id { get; set; }
 
     [Column("super_id")] public int? SuperId { get; set; } // 顶层节点，允许为空
 
