@@ -40,7 +40,7 @@ var incrId = 1;
                         AreaName = areaNameEx.Value[
                                 Math.Max(areaNameEx.Value.IndexOf("span>", StringComparison.Ordinal), 0)..]
                             .Replace("span>", "")
-                            .Replace("<span style=\"mso-spacerun:yes\">&nbsp;</span>","")
+                         //   .Replace("<span style=\"mso-spacerun:yes\">&nbsp;</span>","")
                     };
 
                     if (!nameNode.Contains("&nbsp;"))
